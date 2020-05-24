@@ -1,70 +1,32 @@
-// Gatsby supports TypeScript natively!
-import React from "react"
-import { PageProps, Link, graphql } from "gatsby"
+import React from 'react';
+import {PageProps, Link, graphql} from 'gatsby';
 
-import Bio from "../components/bio"
-import Layout from "../components/layout"
-import SEO from "../components/seo"
-import { rhythm } from "../utils/typography"
+import Bio from '../components/bio';
+import Layout from '../components/layout.tsx';
+import SEO from '../components/seo';
 
 type Data = {
   site: {
     siteMetadata: {
-      title: string
-    }
-  }
+      title: string;
+    };
+  };
   allMarkdownRemark: {
     edges: {
       node: {
-        excerpt: string
+        excerpt: string;
         frontmatter: {
-          title: string
-          date: string
-          description: string
-        }
+          title: string;
+          date: string;
+          description: string;
+        };
         fields: {
-          slug: string
-        }
-      }
-    }[]
-  }
-}
-
-const BlogIndex = ({ data, location }: PageProps<Data>) => {
-  const siteTitle = data.site.siteMetadata.title
-  const posts = data.allMarkdownRemark.edges
-
-  return (
-    <Layout location={location} title={siteTitle}>
-      <SEO title="All posts" />
-      <Bio />
-      {posts.map(({ node }) => {
-        const title = node.frontmatter.title || node.fields.slug
-        return (
-          <article key={node.fields.slug}>
-            <header>
-              <h3>
-                <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
-                  {title}
-                </Link>
-              </h3>
-              <small>{node.frontmatter.date}</small>
-            </header>
-            <section>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: node.frontmatter.description || node.excerpt,
-                }}
-              />
-            </section>
-          </article>
-        )
-      })}
-    </Layout>
-  )
-}
-
-export default BlogIndex
+          slug: string;
+        };
+      };
+    }[];
+  };
+};
 
 export const pageQuery = graphql`
   query {
@@ -73,7 +35,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMarkdownRemark(sort: {fields: [frontmatter___date], order: DESC}) {
       edges {
         node {
           excerpt
@@ -89,4 +51,40 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
+
+const BlogIndex = ({data, location}: PageProps<Data>): object => {
+  const siteTitle = data.site.siteMetadata.title;
+  const posts = data.allMarkdownRemark.edges;
+
+  return (
+    <Layout location={location} title={siteTitle}>
+      <SEO title="All posts" />
+      <Bio />
+      {posts.map(({node}) => {
+        const title = node.frontmatter.title || node.fields.slug;
+        return (
+          <article key={node.fields.slug}>
+            <header>
+              <h3>
+                <Link style={{boxShadow: `none`}} to={node.fields.slug}>
+                  {title}
+                </Link>
+              </h3>
+              <small>{node.frontmatter.date}</small>
+            </header>
+            <section>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: node.frontmatter.description || node.excerpt,
+                }}
+              />
+            </section>
+          </article>
+        );
+      })}
+    </Layout>
+  );
+};
+
+export default BlogIndex;

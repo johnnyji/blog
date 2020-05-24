@@ -1,14 +1,14 @@
-import React from "react";
-import { Link, graphql } from "gatsby";
+import React from 'react';
+import {Link, graphql} from 'gatsby';
 
-import Bio from "../components/bio";
-import Layout from "../components/layout.tsx";
-import SEO from "../components/seo";
+import Bio from '../components/bio';
+import Layout from '../components/layout.tsx';
+import SEO from '../components/seo';
 
-const BlogPostTemplate = ({ data, pageContext, location }) => {
+const BlogPostTemplate = ({data, pageContext, location}) => {
   const post = data.markdownRemark;
   const siteTitle = data.site.siteMetadata.title;
-  const { previous, next } = pageContext;
+  const {previous, next} = pageContext;
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -18,10 +18,10 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
       />
       <article>
         <header>
-          <h1 style={{ marginBottom: 0 }}>{post.frontmatter.title}</h1>
-          <p style={{ display: `block` }}>{post.frontmatter.date}</p>
+          <h1 style={{marginBottom: 0}}>{post.frontmatter.title}</h1>
+          <p style={{display: `block`}}>{post.frontmatter.date}</p>
         </header>
-        <section dangerouslySetInnerHTML={{ __html: post.html }} />
+        <section dangerouslySetInnerHTML={{__html: post.html}} />
         <hr />
         <footer>
           <Bio />
@@ -67,7 +67,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
+    markdownRemark(fields: {slug: {eq: $slug}}) {
       id
       excerpt(pruneLength: 160)
       html
