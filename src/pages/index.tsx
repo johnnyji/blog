@@ -53,12 +53,12 @@ export const pageQuery = graphql`
   }
 `;
 
-const BlogIndex = ({data, location}: PageProps<Data>): object => {
+const BlogIndex = ({data}: PageProps<Data>): object => {
   const siteTitle = data.site.siteMetadata.title;
   const posts = data.allMarkdownRemark.edges;
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout title={siteTitle}>
       <SEO title="All posts" />
       <Bio />
       {posts.map(({node}) => {

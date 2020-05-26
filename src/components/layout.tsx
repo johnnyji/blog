@@ -32,11 +32,7 @@ const ContentWrapper = styled('main')`
   flex: 1 1 0;
 `;
 
-interface Location {
-  pathname: string;
-}
-
-const Layout = ({location: Location, title, children}) => {
+const Layout = ({title, children}) => {
   const header: object = (
     <h3
       style={{
