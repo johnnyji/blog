@@ -17,6 +17,16 @@ const NotFoundPage = ({data}) => {
   );
 };
 
+NotFoundPage.propTypes = {
+  data: PropTypes.shape({
+    site: PropTypes.shape({
+      siteMetadata: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
+  }).isRequired,
+};
+
 export default NotFoundPage;
 
 export const pageQuery = graphql`
