@@ -23,7 +23,6 @@ const Bio = () => {
         siteMetadata {
           author {
             name
-            summary
           }
           social {
             twitter
@@ -53,7 +52,7 @@ const Bio = () => {
         }}
       />
       <p>
-        Written by <strong>{author.name}</strong> {author.summary}
+        Written by <strong>{author.name}</strong>
         {` `}
         <a href={`https://twitter.com/${social.twitter}`}>
           You should follow him on Twitter
