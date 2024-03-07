@@ -68,7 +68,7 @@ const Bio = ({ isBlogPage }) => {
         />
         <SocialIcon
           target="_blank"
-          url="https://twitter.com.com/johnnyisji"
+          url="https://twitter.com/johnnyisji"
           style={{ height: 24, width: 24, marginLeft: 8, marginBottom: 8 }}
         />
         <SocialIcon
