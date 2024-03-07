@@ -9,15 +9,15 @@
  */
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `Johnny Ji's Blog`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `Johnny Ji`,
+      summary: `Co-founder & CTO at Distru | Forbes Under 30`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    description: `My thoughts on startups, leadership, and software engineering.`,
+    siteUrl: `https://johnnyji.com`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `johnnyisji`,
     },
   },
   plugins: [
@@ -80,6 +80,7 @@ module.exports = {
                 return Object.assign({}, node.frontmatter, {
                   description: node.excerpt,
                   date: node.frontmatter.date,
+                  group: node.frontmatter.group,
                   url: site.siteMetadata.siteUrl + node.fields.slug,
                   guid: site.siteMetadata.siteUrl + node.fields.slug,
                   custom_elements: [{ "content:encoded": node.html }],
@@ -97,6 +98,7 @@ module.exports = {
                   frontmatter {
                     title
                     date
+                    group
                   }
                 }
               }

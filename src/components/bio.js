@@ -6,10 +6,11 @@
  */
 
 import * as React from "react"
-import { useStaticQuery, graphql } from "gatsby"
+import { Link, useStaticQuery, graphql } from "gatsby"
+import { SocialIcon } from "react-social-icons"
 import { StaticImage } from "gatsby-plugin-image"
 
-const Bio = () => {
+const Bio = ({ isBlogPage }) => {
   const data = useStaticQuery(graphql`
     query BioQuery {
       site {
@@ -26,31 +27,56 @@ const Bio = () => {
     }
   `)
 
-  // Set these values by editing "siteMetadata" in gatsby-config.js
-  const author = data.site.siteMetadata?.author
-  const social = data.site.siteMetadata?.social
-
   return (
     <div className="bio">
-      <StaticImage
-        className="bio-avatar"
-        layout="fixed"
-        formats={["auto", "webp", "avif"]}
-        src="../images/profile-pic.png"
-        width={50}
-        height={50}
-        quality={95}
-        alt="Profile picture"
-      />
-      {author?.name && (
-        <p>
-          Written by <strong>{author.name}</strong> {author?.summary || null}
-          {` `}
-          <a href={`https://twitter.com/${social?.twitter || ``}`}>
-            You should follow them on Twitter
-          </a>
-        </p>
+      {isBlogPage && (
+        <Link to="/">
+          <StaticImage
+            className="bio-avatar"
+            layout="fixed"
+            formats={["auto", "webp", "avif"]}
+            src="../images/profile-pic.png"
+            width={50}
+            quality={95}
+            alt="Profile picture"
+          />
+        </Link>
       )}
+      <p>
+        <strong>
+          Co-founder & CTO at{" "}
+          <a target="_blank" href="https://distru.com">
+            Distru
+          </a>{" "}
+          | Forbes Under 30
+        </strong>
+        <div>
+          Fun fact: I have 2 dogs, and a slightly above average head to body
+          ratio.
+        </div>
+      </p>
+      <div>
+        <SocialIcon
+          target="_blank"
+          url="https://linkedin.com/in/johnnyji"
+          style={{ height: 24, width: 24, marginLeft: 8, marginBottom: 8 }}
+        />
+        <SocialIcon
+          target="_blank"
+          url="https://tiktok.com/@gentletechbro"
+          style={{ height: 24, width: 24, marginLeft: 8, marginBottom: 8 }}
+        />
+        <SocialIcon
+          target="_blank"
+          url="https://twitter.com.com/johnnyisji"
+          style={{ height: 24, width: 24, marginLeft: 8, marginBottom: 8 }}
+        />
+        <SocialIcon
+          target="_blank"
+          url="mailto:johnny@johnnyji.com"
+          style={{ height: 24, width: 24, marginLeft: 8, marginBottom: 8 }}
+        />
+      </div>
     </div>
   )
 }

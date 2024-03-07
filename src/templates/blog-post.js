@@ -26,9 +26,9 @@ const BlogPostTemplate = ({
           dangerouslySetInnerHTML={{ __html: post.html }}
           itemProp="articleBody"
         />
-        <hr />
+        <hr style={{ marginTop: 64 }} />
         <footer>
-          <Bio />
+          <Bio isBlogPage={true} />
         </footer>
       </article>
       <nav className="blog-post-nav">
