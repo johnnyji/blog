@@ -20,7 +20,7 @@ const BlogIndex = ({ data, location }) => {
 
   return (
     <Layout location={location} title={siteTitle}>
-      <ol style={{ listStyle: `none` }}>
+      <ol style={{ listStyle: `none`, paddingLeft: 24, paddingRight: 24 }}>
         {Object.keys(postsByGroup).map(group => {
           const posts = postsByGroup[group]
 
@@ -50,7 +50,9 @@ const BlogIndex = ({ data, location }) => {
                     >
                       <span itemProp="headline">{post.frontmatter.title}</span>
                     </Link>
-                    <small>{post.frontmatter.date}</small>
+                    <small style={{ textAlign: "right" }}>
+                      {post.frontmatter.date}
+                    </small>
                   </article>
                 ))}
               </section>
