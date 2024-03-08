@@ -37,7 +37,7 @@ To make changes to Commit B, we’ll need to issue the following command:
 git rebase -i 400d63a771fc0eefd7409da4bfa6a1f37bfff17b^
 ```
 
-_You’ll need to add a_ `_^_` _at the end of the commit hash to include that particular commit as a part of your interactive rebase._
+_You’ll need to add a_ `^` _at the end of the commit hash to include that particular commit as a part of your interactive rebase._
 
 After you run this command, you should be at the interactive rebase screen, here you can change `pick` to `edit` for Commit B:
 

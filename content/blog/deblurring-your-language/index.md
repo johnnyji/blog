@@ -8,7 +8,7 @@ Have you ever agreed on a time to hang out with your friend only to find yoursel
 
 > “Sorry omw”, “I’ll be there soon”, “Almost there!”
 
-I’ve been in this situation and each time I’m left thinking:
+I've been in this situation and each time I’m left thinking:
 
 1. Are they okay?
 2. When will they _actually_ be here?
@@ -23,7 +23,7 @@ In reality, having to wait for a friend is whatever, who cares?
 
 However, when building a fast-moving startup, using blurry language could mean the difference between hitting a critical deadline or not, closing a life-changing investment or not, etc. At [Distru](https://www.distru.com/), we **deblur** as a core tenant of our culture.
 
-## 1: Identifying blurry language
+## 1. Identifying blurry language
 
 Blurry language has common traits that you can learn to spot over time:
 
@@ -31,13 +31,13 @@ Blurry language has common traits that you can learn to spot over time:
 2. Emanating resolve, but without next steps (I got it, it’s all good)
 3. Using words that convey different meanings to different people (finished, fixed, done)
 
-Here are some examples of phrases that we’ve used commonly at Distru that are blurry. To help illustrate, I have underlined the parts of the language to focus on:
+Here are some examples of phrases that we've used commonly at Distru that are blurry. To help illustrate, I have underlined the parts of the language to focus on:
 
 **Providing Estimates: “The unit types feature is pretty much ready.”**
 
-*   **unit types feature** could be big in scope, and might be interpreted differently by different people.
-*   **pretty much** is relative to the person giving the estimate. This phrase could mean 1 hour or 1 week of work.
-*   **ready** is contextual to how someone perceives ready. For example, is this work _ready_ to be reviewed by other engineers, _ready_ to be QA’d, or _ready_ to be used by customers?
+*  **unit types feature** could be big in scope, and might be interpreted differently by different people.
+*  **pretty much** is relative to the person giving the estimate. This phrase could mean 1 hour or 1 week of work.
+*  **ready** is contextual to how someone perceives ready. For example, is this work _ready_ to be reviewed by other engineers, _ready_ to be QA’d, or _ready_ to be used by customers?
 
 **Giving Feedback: “You did a great job closing Client X!”**
 *   **great job** does not specify what the person did great, thus making it harder for them to repeat that behavior in the future.
@@ -55,7 +55,7 @@ Here are some examples of phrases that we’ve used commonly at Distru that are 
 
 Blurry language gives and withholds essential details at the same time. So, if you find yourself vaguely understanding something that’s been communicated and not feeling completely satisfied with it, you likely need to ask the other person to deblur their language.
 
-## 2: Deblurring
+## 2. Deblurring
 
 Lets deblur our examples from above:
 
@@ -85,7 +85,7 @@ Here we are deblurring what we’re owning, by when we plan to execute, and a fo
 >
 > **To non-engineers:** “The bug where users were sometimes unable to see their profile images in the header bar has been shipped to production just now.”
 
-Here we see that we’re deblurring what we’re updating on and giving context to the progress based on our audience.
+Here we see that we're deblurring what we’re updating on and giving context to the progress based on our audience.
 
 ## 3. Calling out blurry language (safely)
 
