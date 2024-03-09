@@ -1,32 +1,9 @@
-/**
- * Bio component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.com/docs/how-to/querying-data/use-static-query/
- */
-
 import * as React from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
+import { Link } from "gatsby"
 import { SocialIcon } from "react-social-icons"
 import { StaticImage } from "gatsby-plugin-image"
 
 const Bio = ({ isBlogPage }) => {
-  const data = useStaticQuery(graphql`
-    query BioQuery {
-      site {
-        siteMetadata {
-          author {
-            name
-            summary
-          }
-          social {
-            twitter
-          }
-        }
-      }
-    }
-  `)
-
   return (
     <div className="bio">
       {isBlogPage && (
@@ -43,17 +20,17 @@ const Bio = ({ isBlogPage }) => {
         </Link>
       )}
       <p>
-        <strong>
+        <strong style={{ display: "block" }}>
           Co-founder & CTO at{" "}
-          <a target="_blank" href="https://distru.com">
+          <a target="_blank" href="https://distru.com" rel="noreferrer">
             Distru
           </a>{" "}
           | Forbes Under 30
         </strong>
-        <div>
+        <span>
           Fun fact: I have 2 dogs, and a slightly above average head to body
           ratio.
-        </div>
+        </span>
       </p>
       <div>
         <SocialIcon
