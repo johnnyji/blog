@@ -1,7 +1,7 @@
 ---
 title: "Move fast by deblurring your language"
 date: "2024-03-07"
-group: "On startup culture & communication"
+group: "On startup culture"
 ---
 
 Have you ever agreed on a time to hang out with your friend only to find yourself waiting, and then you get this text:
