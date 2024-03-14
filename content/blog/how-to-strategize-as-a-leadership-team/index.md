@@ -22,7 +22,7 @@ Every executive/leader in a startup as different sets of information. Examples:
 
 The problem is that this info is **siloed** within each leader, causing every leader to operate effectively in their own domain, but not as a cohesive unit. This leads to lack of alignment and conviction, both of which are crucial for making the best strategic decisions.
 
-So in order to make the best decisions you can, the leadership team must have a way of disseminating information to each other. This allows the company to make the best strategic decision, and as an added bonus, also helps each leader operate more effectively in their own domain.
+The leadership team must have a way of disseminating information to each other. This allows the company to make the best strategic decision, and as an added bonus, also helps each leader operate more effectively in their own domain.
 
 ## A proven solution: Leadership Offsites
 
