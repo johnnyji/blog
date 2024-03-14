@@ -29,6 +29,7 @@ const BlogIndex = ({ data, location }) => {
               <header style={{ marginBottom: 36 }}>
                 <h2>{group}</h2>
               </header>
+
               <section>
                 {posts.map(post => (
                   <article
