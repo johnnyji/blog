@@ -31,6 +31,11 @@ Now, without further ado, here are some of team Distru's lasting team memories :
 
 `youtube: https://www.youtube.com/watch?v=9CvQ0m3tP8A&ab_channel=johnnyji`
 
+
+### Distru engineers go to Portugal
+
+`youtube: https://www.youtube.com/watch?v=7k9D0saj0Cg&t=448s&ab_channel=johnnyji`
+
 ### Distru engineers go to NYC
 
 `youtube: https://www.youtube.com/watch?v=47qAkV3f8aw&ab_channel=johnnyji`
