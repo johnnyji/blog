@@ -57,8 +57,8 @@ typings/
 # gatsby files
 .cache/
 public
-!public/well-known/pki-validation/68DAA69EF3D406BF18A5CD5981C51294.txt
-!public/.well-known/pki-validation/68DAA69EF3D406BF18A5CD5981C51294.txt
+!public/well-known/pki-validation/A9569F459EF8F85FFB8FE8A2F4E4F47E.txt
+!public/.well-known/pki-validation/A9569F459EF8F85FFB8FE8A2F4E4F47E.txt
 
 # Mac files
 .DS_Store
