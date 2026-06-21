@@ -1,7 +1,7 @@
 ---
 title: "Attracting 10x engineers (on a startup budget)"
 date: "2024-03-06"
-group: "On engineering leadership"
+group: "On engineering"
 ---
 
 Even though I’m the CTO of Distru, I can proudly call myself the worst engineer on my team! In fact, did you know that at the time of writing this, Distru is the leading Cannabis ERP and generates **$6.5M ARR off of** **4 engineers!** All of which I consider to be 10x engineers.

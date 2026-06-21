@@ -1,7 +1,7 @@
 ---
 title: "Reducing token costs in multi-turn agents"
 date: "2026-06-21"
-group: "On engineering leadership"
+group: "On engineering"
 ---
 
 If you're building agentic AI systems with tool calling, you've probably noticed that input tokens dominate your cost. We traced a simple "create one invoice" task and found that 91% of the spend was input tokens. The LLM's actual output? 356 tokens. A single tool call.
