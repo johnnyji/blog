@@ -1,130 +1,112 @@
 ---
-title: "Reducing token costs in multi-turn agents"
+title: "Subagents didn't cut our LangGraph bill"
 date: "2026-06-21"
 group: "On engineering"
+description: "Subagents kept our agent's tool work out of its prompts but barely moved the bill. Caching the history and a cheaper model did."
 ---
 
-If you're building agentic AI systems with tool calling, you've probably noticed that input tokens dominate your cost. We traced a simple "create one invoice" task and found that 91% of the spend was input tokens. The LLM's actual output? 356 tokens. A single tool call.
+We built an agentic harness in LangGraph JS that writes to QuickBooks Online through Composio's QuickBooks tools. An orchestrator handed work to worker subagents (a QuickBooks reader on Haiku 4.5, a data transformer, a writer), and the writer's planner was a subgraph on Sonnet 4.6 that stopped on a HITL (human-in-the-loop) interrupt, so the user approved before anything got written.
 
-The obvious fix is to trim your tool results, thus returning less data to the LLM (and that works up to a point). But we found that trimming alone doesn't address the deeper problem: some tool work is inherently multi-turn and exploratory, and that entire sub-conversation is what needs to be contained.
+Then a LangSmith trace showed one approval turn had added up to **509K prompt tokens**, up from ~7K for a simple turn. So we moved the tool work out of the parent, and the flow I expected was:
 
-## The cost structure of multi-turn tool use
+1. The messy tool work runs in subagents, each with its own context
+2. The parent only gets back a short summary
+3. The parent's prompts shrink, so the bill shrinks (this is where I was wrong)
 
-In a ReAct-style loop, every LLM call replays the full conversation history. Each tool result you add gets re-sent on every subsequent call.
+It turns out, a subagent **moves** tokens, it doesn't delete them. Steps 1 and 2 worked. Step 3 didn't: most of the planner's input was conversation history we weren't caching.
 
-If you have `n` tool-calling turns, and each tool result is `R` tokens:
+To check it, we rebuilt our harness's shape (`@langchain/langgraph` 1.3.0) with a scripted model (it replays fixed answers, so nothing runs or gets billed), and counted every request it sent with Anthropic's free [`count_tokens`](https://platform.claude.com/docs/en/build-with-claude/token-counting) endpoint. The costs below are list-price arithmetic on those counts. On a "create one invoice" task:
 
-- Turn 1 input: `S + R_1`
-- Turn 2 input: `S + R_1 + R_2`
-- Turn n input: `S + R_1 + R_2 + ... + R_n`
+- moving the planner's reads into a subagent cut its biggest prompt by 80%
+- with the same model, that saved 4% at best, and cost 20% more once the history was cached
+- caching the history cut the planner's cost by about a third
+- running the subagent on Haiku cut it by more than half
 
-Each tool result doesn't cost you once — it costs you on every subsequent call for the rest of the conversation. Total input grows quadratically with conversation length.
+**Splitting an agent into subagents to save money can leave the bill where it was, or make it bigger.**
 
-We saw this in practice. Our LangGraph agent orchestrates QuickBooks Online API calls, and a straightforward "create an invoice" task took 4 LLM calls:
+## Why did one approval cost 509K tokens?
 
-1. Search for the right API tools
-2. Query customer and item records
-3. Generate a write plan for human approval
-4. Execute the API call
+The model doesn't remember anything between calls. [Anthropic's docs](https://platform.claude.com/docs/en/build-with-claude/working-with-messages) put it plainly:
 
-By the 4th call, the input had ballooned to 24,612 tokens:
+> The Messages API is stateless, which means that you always send the full conversational history to the API.
 
-| Component          | Tokens | Cost   | % of total |
-| ------------------ | ------ | ------ | ---------- |
-| Input (non-cached) | 16,216 | $0.049 | 86%        |
-| Input (cache read) | 8,396  | $0.003 | 4%         |
-| Output             | 356    | $0.005 | 10%        |
+So every tool result in your agent's history gets sent again on every call after it, and you pay for it over and over (and over) again.
 
-The LLM was doing almost no thinking — it was just reading the same bloated context over and over.
+In our case, every worker's full result went into the orchestrator's messages as a `ToolMessage`: a customer list starting "Here are the first 20 of 30 customers…" (2,000+ characters), then the transformer's output, then the writer's. Every call after that re-sent all of it. The 509K was the total across that turn's model calls, each one re-sending its whole history.
 
-## The two kinds of tool work
+## How we kept tool work out of the parent
 
-When we looked at what was actually inflating the context, we found two distinct categories of tool use.
+The fix was to have each worker hand back a one-line `briefSummary` (capped at 160 characters) and put its raw data in S3. In the rebuild, that took about 1,400 tokens off every later orchestrator call in a three-task workflow.
 
-### Simple lookups: trim the result
+The planner still did its own reads, though: it searched Composio for the right QuickBooks tool, then looked up the customer and the item, and every result stayed in its history. So in the rebuild, we moved those reads into a reader subagent of its own. It gets one fresh message, has its own message history, and hands back a short summary. It's the pattern Anthropic describes in [its context-engineering post](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents):
 
-Some tool calls are straightforward: call an API, get a response, use a value from it. The problem is that the response is bloated. The Quickbooks MCP returned full entity objects — every field, including currency preferences, billing settings, metadata timestamps, and balance history. In reality, all the LLM needed was `Customer ID: 162`.
+> Each subagent might explore extensively, using tens of thousands of tokens or more, but returns only a condensed, distilled summary of its work (often 1,000-2,000 tokens).
 
-The fix here is simple: **trim the tool result before it enters the conversation history.** Return only what the LLM needs. We cap our tool messages at ~160 characters using a `briefSummary` field and store the raw data separately in S3. The full response never touches the conversation history.
+And for the context, it worked! The planner's biggest prompt dropped from 13,096 tokens to 2,559.
 
-This is the right fix for any tool call where the work is one step: call, extract, move on.
+## So did the subagents make it cheaper?
 
-### Exploratory work: subagent delegation
+Not by themselves. When the planner does its own reads, every QuickBooks record sits in its history:
 
-But not all tool work is a single call. Our QuickBooks read flow looks like this:
+![Diagram: QuickBooks records go straight into the parent agent, which re-reads all of them on every call before it plans.](./parent-rereads-every-result.png)
 
-1. Search available API tools (returns ~34K chars of schemas and execution guidance)
-2. Pick the right tools based on the search results
-3. Query the customer record
-4. Query the item catalog
-5. Extract the relevant IDs from both responses
+A subagent takes them out of the parent, but it still reads every search result and every record, and re-reads them on each of its own calls:
 
-This is a multi-turn exploration — the agent is searching, deciding, querying, and parsing across several back-and-forth cycles. Even if you trim each individual tool result, you still have 5 turns of history accumulating in your parent context. And the parent doesn't need any of it. It just needs the answer: "Customer 'Acme Corp' is ID 162, Item 'Services' is ID 1."
+![Diagram: the same QuickBooks records now go into a subagent, highlighted, which re-reads all of them on every call and passes a summary to the parent agent.](./subagent-rereads-it-instead.png)
 
-This is where **subagent delegation** makes sense. You spawn a subagent with its own isolated context, let it do the messy multi-turn exploration, and return only the condensed findings to the parent.
+A subagent is like hiring an assistant to read your mail: your desk stays clear, but you're still paying someone to read every letter.
 
+Here's what planning one invoice costs in the rebuild at list prices, counting the planner, the reader and the summaries. "As we cached it" means only the system prompt and tool definitions were cached:
+
+| Who does the reads          | As we cached it | History cached |
+| --------------------------- | --------------- | -------------- |
+| The planner itself (Sonnet) | $0.113          | $0.074         |
+| A subagent on Sonnet        | $0.109          | $0.089         |
+| A subagent on Haiku         | $0.051          | $0.044         |
+
+With the same model, the subagent saved 4% the way we cached. Once the history is cached, it costs 20% _more_ than letting the planner do its own reads! Caching cuts the inline planner's long history by 34%, and the subagent's short calls by only 18%.
+
+The payloads are stand-ins sized from Composio's and Intuit's docs. With bigger ones, the subagent cost 6% more the way we cached, and 26% more once the history was cached.
+
+Anthropic saw the same thing at a much bigger scale. In [their multi-agent research system](https://www.anthropic.com/engineering/built-multi-agent-research-system), a single agent used about 4× the tokens of a chat, and the multi-agent setup about 15×. They only call it worth it when the task is valuable enough to pay for that.
+
+## What was the bill actually made of?
+
+Here's the trace of our write planner creating one invoice (its numbers have the shape of one planner call):
+
+| Tokens     | Count  | Cost   |
+| ---------- | ------ | ------ |
+| Not cached | 16,216 | $0.049 |
+| Cache read | 8,396  | $0.003 |
+| Output     | 356    | $0.005 |
+
+Input was 91% of that call's cost, which is normal for an agent ([Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) reports an input-to-output ratio around 100:1). What isn't normal is the first row. Only a third of the input came from cache!
+
+Our cache breakpoint sat on the tool definitions, so from the second call on, the planner read its tools from cache and paid full price for every message after them. A cache read costs [a tenth](https://platform.claude.com/docs/en/about-claude/pricing) of a fresh input token ($0.30 per million on Sonnet 4.6, against $3), so the history is exactly the part you want cached.
+
+In the rebuild, caching the history cut the planner's cost by 34% and the whole run's by 29%. (The cache only lives 5 minutes, so a slow approval could break it. Here it didn't; everything worth caching finished before the user clicked approve.)
+
+## Where subagents do save money
+
+Look at the last row of that cost table again. The same reader on Haiku 4.5 instead of Sonnet cut planning cost by 54%. Haiku's input is a third of Sonnet's price, and our orchestrator's QuickBooks reader already ran on it, so almost all of that saving comes from the model.
+
+## What I check now
+
+When the context is the problem (prompts growing with every task), I reach for a subagent. When the bill is the problem:
+
+1. Open a trace and divide cache reads by total input
+2. If that's low, put a breakpoint on the history
+3. Run each subagent on the cheapest model that does its job
+
+Step 2 is one call option. `ChatAnthropic` forwards `cache_control` to Anthropic's [automatic caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching), where "the cache point moves forward automatically as conversations grow":
+
+```ts
+const model = new ChatAnthropic({ model: "claude-sonnet-4-6" }).bindTools(tools);
+
+// in the planner node
+const response = await model.invoke(state.messages, {
+  cache_control: { type: "ephemeral" }, // caches the whole history, every call
+});
 ```
-Parent:
-  → "Find the customer and item IDs for this invoice"
 
-  Subagent (isolated context):
-    → Search API tools (34K chars of schemas)
-    → Query customer (full entity response)
-    → Query item catalog (full entity response)
-    → Extract: Customer ID 162, Item ID 1
-    ← Context discarded after extraction
-
-  ← "Customer 'Acme Corp' → ID 162, Item 'Services' → ID 1"
-     (~100 chars enter parent history)
-
-Parent:
-  → Generate write plan (with ~100 chars of context, not 46K)
-  ← Done
-```
-
-The subagent's bloated context is paid for once and thrown away. The parent never has to know how many API calls it took, what schemas were searched, or what dead ends were hit.
-
-### The key difference
-
-Trimming solves "the response is too big." Subagent delegation solves "the work is too messy."
-
-If you only trim results, you still leak the shape of the exploration into the parent — every intermediate step, every query, every tool search. The parent's history still grows with each step the subagent would have handled.
-
-If you only use subagents, you're adding unnecessary complexity to simple lookups that could be handled by returning fewer fields.
-
-## The decision rule
-
-When you're wiring up a new tool in your agent:
-
-**Trim the result** when:
-
-- The tool work is a single call-and-extract
-- You can define upfront what fields the LLM needs
-- The response is large but the work is simple
-
-**Delegate to a subagent** when:
-
-- The work requires multiple tool calls in sequence
-- The agent needs to search, decide, then query (exploration)
-- Intermediate results are high-volume but only the final answer matters to the caller
-- The work might involve retries or branching paths
-
-## The impact
-
-After applying both strategies — trimming simple results and delegating exploratory reads to a subagent — our parent orchestrator's context stays flat regardless of how many tool operations it coordinates:
-
-| Metric                       | Before (inline)             | After (trim + subagent)        |
-| ---------------------------- | --------------------------- | ------------------------------ |
-| Parent sees from tool search | ~34K chars of schemas       | Nothing (subagent handles it)  |
-| Parent sees from API query   | ~12K chars of full entities | ~100 chars: IDs extracted      |
-| History growth per turn      | Quadratic (compounds)       | Flat (~100-200 chars per task) |
-
-The subagent still pays its own multi-turn cost internally, but that cost is bounded and ephemeral. It doesn't compound across the parent's lifetime.
-
-## The takeaway
-
-The quadratic cost of multi-turn tool calling is real, but "use subagents" isn't always the answer, and "trim your results" isn't always sufficient.
-
-The distinction that matters is whether you're dealing with a **lookup** or an **exploration**. Lookups produce large responses that can be trimmed at the source. Explorations produce entire sub-conversations that need to be contained.
-
-The next time a trace surprises you with its cost, look at the input breakdown. If 80-90% is input tokens, check what's being replayed. If it's bloated API responses, trim them. If it's an entire multi-turn workflow that the parent didn't need to witness, wrap it in a subagent and return only the answer.
+Subagents cleared our parent agent's desk. The bill was one field away the whole time.
