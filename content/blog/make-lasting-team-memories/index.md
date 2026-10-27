@@ -12,6 +12,8 @@ Other startups with inevitably try to poach your best talent, and some will offe
 
 After all, if money, perks and titles were all that matter, then we'd all be working on Wall Street. What a boring world that would be!
 
+I talk more about keeping great engineers in [my SaaSOpen Austin talk](https://www.youtube.com/watch?v=xmqG0daDgzk&t=1170s).
+
 ## Vlog your team trips!
 
 The best way I've found to make lasting memories at Distru is to **travel together, and record it on video.** The **record it on video** part is insanely important, and not something that most leaders go through the effort of doing. But it's worth it because:

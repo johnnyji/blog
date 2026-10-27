@@ -53,3 +53,5 @@ Rather than re-learning how to do these things every time you need to, popping i
 As you can see, these all help enhance the developer experience. But at the end of the day, you still need great software engineers to do 80% of the heavy lifting.
 
 [Here’s how to attract those great engineers (on a startup budget)!](/attracting-10x-engineers-on-a-startup-budget)
+
+[Or watch my talk on what makes a good engineer.](https://www.youtube.com/watch?v=xmqG0daDgzk&t=375s)

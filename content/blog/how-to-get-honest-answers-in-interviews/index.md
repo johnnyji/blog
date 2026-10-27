@@ -11,6 +11,8 @@ I've conducted hundreds (maybe thousands) of interviews. One thing I've learnt i
 
 This is especially true for Distru, we're doing over $13M ARR with 8 engineers as of 2026, so one wrong hire is >10% of the engineering team (yikes).
 
+Back in 2024 we were at $7M ARR with 4 engineers, and I gave a [talk on how we hire (and fire)](https://www.youtube.com/watch?v=xmqG0daDgzk&t=309s) at that size.
+
 The reality is you can't ever fully stop little white lies. What you can do is **make the honest answer the easiest one to give**. I do that with three rules:
 
 1. Keep it casual

@@ -4,7 +4,7 @@ date: "2024-03-06"
 group: "On engineering"
 ---
 
-Even though I’m the CTO of Distru, I can proudly call myself the worst engineer on my team! In fact, did you know that at the time of writing this, Distru is the leading Cannabis ERP and generates **$6.5M ARR off of** **4 engineers!** All of which I consider to be 10x engineers.
+Even though I’m the CTO of Distru, I can proudly call myself the worst engineer on my team! In fact, did you know that at the time of writing this, Distru is the leading Cannabis ERP and generates [**$7M ARR off of** **4 engineers!**](https://www.youtube.com/watch?v=xmqG0daDgzk) All of which I consider to be 10x engineers.
 
 Distru is an ERP (enterprise resource planner) for the Cannabis industry. If you've ever built ERPs before, you’ll know they’re very feature rich, nuanced and hard to build.
 
@@ -34,7 +34,7 @@ Benefits:
 1. You don’t talent lock yourself to a specific region (why would you sabotage yourself like this?).
 2. You don’t need to pay office rent.
 3. Great engineers have choice, and the choice to be at home where-ever in the world is an enticing one.
-4. Once you go remote & timezone free, it’s hard to go back. Employee retention.
+4. Once you go remote & timezone free, it’s hard to go back. [Employee retention](https://www.youtube.com/watch?v=xmqG0daDgzk&t=1170s).
 
 You could argue that its much harder to collaborate when your timezones are not as aligned. However, in my experience, great engineers don't need to collaborate nearly as much.
 
@@ -55,3 +55,7 @@ Once you’re certain this person is committed to the cause, give them generous 
 No other company has you. You’re the ultimate sauce in attracting great engineers. Other companies have HR managers or hired guns that interview people, they will **never** give off the enthusiasm and infectious energy that you will.
 
 That energy will attract people to you far more than you realize.
+
+## Watch the talk
+
+`youtube: https://www.youtube.com/watch?v=xmqG0daDgzk`
