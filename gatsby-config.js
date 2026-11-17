@@ -12,7 +12,7 @@ module.exports = {
     title: `Johnny Ji's Blog`,
     author: {
       name: `Johnny Ji`,
-      summary: `Co-founder & CTO at Distru | Forbes Under 30`,
+      summary: `Founder at Distru | Forbes Under 30`,
     },
     description: `My thoughts on startups, leadership, and software engineering.`,
     siteUrl: `https://johnnyji.com`,

@@ -21,7 +21,7 @@ const Bio = ({ isBlogPage }) => {
       )}
       <p>
         <strong style={{ display: "block" }}>
-          Co-founder & CTO at{" "}
+          Founder at{" "}
           <a target="_blank" href="https://distru.com" rel="noreferrer">
             Distru
           </a>{" "}
