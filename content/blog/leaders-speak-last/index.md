@@ -1,7 +1,8 @@
 ---
 title: "Leaders should try to speak last"
 date: "2024-03-12"
-group: "On startup culture"
+tags: ["leadership", "culture"]
+description: "In meetings, leaders should often try to speak last. This is because their opinions often carry more weight, and can heavily influence others."
 ---
 
 In meetings, leaders should often try to speak last. This is because their opinions often carry more weight, and can heavily influence others.

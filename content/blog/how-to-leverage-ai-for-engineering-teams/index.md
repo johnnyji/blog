@@ -1,7 +1,8 @@
 ---
 title: "How to leverage AI for engineering teams"
 date: "2024-03-06"
-group: "On engineering"
+tags: ["ai", "engineering"]
+description: "As of March 2024, AI (I'm referring to LLMs like ChatGPT when I say AI) have both come a long way and... not really."
 ---
 
 As of March 2024, AI (I’m referring to LLMs like ChatGPT when I say AI) have both come a long way and... not really.

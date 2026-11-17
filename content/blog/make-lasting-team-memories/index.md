@@ -1,7 +1,8 @@
 ---
 title: "Make lasting team memories"
 date: "2024-04-24"
-group: "On startup culture"
+tags: ["culture", "leadership"]
+description: "The memories we create with our colleagues are what make our jobs worthwhile."
 ---
 
 ## Companies are made up of people, and people are made up of memories.

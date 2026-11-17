@@ -1,7 +1,8 @@
 ---
 title: "How to make strategic decisions as a leadership team"
 date: "2024-03-13"
-group: "On building startups"
+tags: ["leadership", "startups"]
+description: "Being a good leader at a startup means you need to consistently choose the right opportunity, over and over again."
 ---
 
 Startups constantly face a lot of opportunities that could make or break them. Being a good leader at a startup means you need to consistently choose the right opportunity, over and over again. If you don't, and your competitors do, that could mean the difference between a billion dollar exit, or having to shut down and start over. There are examples of this everywhere:

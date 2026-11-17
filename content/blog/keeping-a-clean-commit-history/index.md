@@ -1,7 +1,8 @@
 ---
 title: "Keeping a clean commit history"
 date: "2024-03-05"
-group: "On engineering"
+tags: ["engineering"]
+description: "Have you ever come across a PR (pull request) with a commit history that looks like this?"
 ---
 
 Have you ever come across a PR (pull request) with a commit history that looks like this?

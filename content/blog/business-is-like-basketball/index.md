@@ -1,7 +1,8 @@
 ---
 title: "Business is like basketball"
 date: "2024-06-09"
-group: "On building startups"
+tags: ["startups"]
+description: "I failed at 3 businesses before I had any success with Distru."
 ---
 
 ## Am I good at business?

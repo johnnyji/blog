@@ -1,7 +1,7 @@
 ---
 title: "One docs search for every agent"
 date: "2026-10-09"
-group: "On engineering"
+tags: ["ai", "engineering"]
 description: "Agents read your docs as much as people do now, but only what they're told to. Put your API docs, MCP docs and help center behind one search."
 ---
 

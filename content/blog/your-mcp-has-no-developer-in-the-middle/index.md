@@ -1,7 +1,7 @@
 ---
 title: "Your MCP has no developer in the middle"
 date: "2026-10-09"
-group: "On engineering"
+tags: ["ai", "engineering"]
 description: "An API had a developer in the middle who knew how each customer runs their business. An MCP doesn't, so that context has to ship with it."
 ---
 

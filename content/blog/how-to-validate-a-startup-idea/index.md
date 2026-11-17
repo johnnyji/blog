@@ -1,7 +1,8 @@
 ---
 title: "How to validate a startup idea (step by step)"
 date: "2024-03-08"
-group: "On building startups"
+tags: ["startups"]
+description: "When you decide to build a startup, you're essentially becoming an extremely undiversified investor."
 ---
 
 When you decide to build a startup, you're essentially becoming an extremely undiverisfied investor. You're allocating your entire life into 1 bet (yikes).

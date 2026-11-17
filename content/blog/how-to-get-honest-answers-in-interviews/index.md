@@ -1,11 +1,9 @@
 ---
-title: "10 Years as CTO: How to get honest answers in interviews"
+title: "How to get honest answers in interviews"
 date: "2026-10-25"
-group: "On startup culture"
+tags: ["hiring", "leadership"]
 description: "Interviews are a game of little white lies. Over 10 years and hundreds of interviews, I've developed a method to get the honest truth."
 ---
-
-This is a part of a new series where I share snippets of learnings I've had in my 10 years of being a CTO! The topic today is getting honest answers between the little white lies of interviews.
 
 I've conducted hundreds (maybe thousands) of interviews. One thing I've learnt is that it's all a game where you're trying to find out if someone would be good for the role, and they're trying to sound like exactly what the role asks for. This becomes a dangerous sport at scale because it can make it really hard to distinguish the bad, from the good, from the great.
 

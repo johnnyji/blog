@@ -1,7 +1,7 @@
 ---
 title: "Subagents didn't cut our LangGraph bill"
 date: "2026-06-21"
-group: "On engineering"
+tags: ["ai", "engineering"]
 description: "Subagents kept our agent's tool work out of its prompts but barely moved the bill. Caching the history and a cheaper model did."
 ---
 
